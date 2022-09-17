@@ -8,7 +8,7 @@ class StorageException(Exception):
     pass
 
 
-def save_to_disk(json_content, path):
+def save_to_disk():
     schema = {
         "doc": "Data pumping job",
         "name": "json2avro",
@@ -22,19 +22,12 @@ def save_to_disk(json_content, path):
         ],
     }
     parsed_schema = parse_schema(schema)
-    workdir = os.path.expanduser(
-        '~/PycharmProjects/parser/web_api'
-        )
-#    reading_path = os.path.join(workdir, json_content.lstrip("/"))
-    reading_path = '/Users/gaol1002/PycharmProjects/parser/web_api'
-#    storing_path = os.path.join(workdir, path.lstrip("/"))
-    storing_path = '/Users/gaol1002/PycharmProjects/parser/web_api'
+
+    current_dir = '/Users/gaol1002/PycharmProjects/parser/wed_api'
+    reading_path = '/Users/gaol1002/PycharmProjects/parser/wed_api/raw_data'
+    storing_path = '/Users/gaol1002/PycharmProjects/parser/wed_api/gold_data'
 
     incoming_files = os.listdir(reading_path)
-    print(incoming_files)
-    if os.path.exists(reading_path):
-        incoming_files = os.listdir(reading_path)
-        print(incoming_files)
 
     for in_file in incoming_files:
         out_file = os.path.splitext(in_file)[0] + ".avro"
@@ -47,3 +40,4 @@ def save_to_disk(json_content, path):
         except Exception as e:
             raise StorageException(f"Failed to process file {in_file}. {e}")
 
+save_to_disk()
